@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: catalogo-jogos
+  datasource:
+    url: jdbc:mysql://localhost:3306/catalogo_jogos
+    username: mysql
+    password: root123
+  jpa:
+    hibernate:
+      ddl-auto: update
