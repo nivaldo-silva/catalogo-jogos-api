@@ -16,6 +16,7 @@ public class JogoDto {
 							  @Size(max = 500) String descricao,
 							  @NotNull LocalDate dataLancamento,
 							  @Size(max = 100) String desenvolvedora,
+							  @Size(max = 500) String urlDaImagem,
 							  List<UUID> consolesIds,
 							  List<UUID> categoriasIds
 	) {}
