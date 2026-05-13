@@ -1,9 +1,11 @@
 package io.github.nivaldosilva.catalogo_jogos.controller;
 
-import io.github.nivaldosilva.catalogo_jogos.entity.Console;
+import io.github.nivaldosilva.catalogo_jogos.dto.ConsoleDto;
 import io.github.nivaldosilva.catalogo_jogos.service.ConsoleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -18,33 +20,37 @@ public class ConsoleController {
 	private final ConsoleService consoleService;
 
 	@PostMapping
-	public ResponseEntity<Console> addConsole(@RequestBody Console console) {
-		log.info("Console adicionado com sucesso");
-		return ResponseEntity.accepted().body(consoleService.addConsole(console));
+	public ResponseEntity<ConsoleDto.consoleResponse> addConsole(
+			@RequestBody @Valid ConsoleDto.consoleRequest request) {
+		log.info("Requisição para adicionar console: {}", request.nome());
+		ConsoleDto.consoleResponse response = consoleService.addConsole(request);
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Console>> findAll() {
-		log.info("Listando todos os consoles");
+	public ResponseEntity<List<ConsoleDto.consoleResponse>> findAll() {
+		log.info("Requisição para listar todos os consoles");
 		return ResponseEntity.ok(consoleService.findAll());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Console> findById(@PathVariable UUID id) {
-		log.info("Listando console com id: {}", id);
+	public ResponseEntity<ConsoleDto.consoleResponse> findById(@PathVariable UUID id) {
+		log.info("Requisição para buscar console com id: {}", id);
 		return ResponseEntity.ok(consoleService.findById(id));
 	}
 
-	@PutMapping
-	public ResponseEntity<Console> updateById(@PathVariable UUID id, @RequestBody Console console) {
-		log.info("Console atualizado com sucesso");
-		return ResponseEntity.ok(consoleService.updateById(id, console));
+	@PutMapping("/{id}")
+	public ResponseEntity<ConsoleDto.consoleResponse> updateById(
+			@PathVariable UUID id,
+			@RequestBody @Valid ConsoleDto.consoleRequest request) {
+		log.info("Requisição para atualizar console com id: {}", id);
+		return ResponseEntity.ok(consoleService.updateById(id, request));
 	}
 
-	@DeleteMapping
-	public ResponseEntity<Console> deleteById(@PathVariable UUID id) {
-		log.info("Console deletado com sucesso");
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deleteById(@PathVariable UUID id) {
+		log.info("Requisição para deletar console com id: {}", id);
 		consoleService.deleteById(id);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.noContent().build();
 	}
 }
