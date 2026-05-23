@@ -6,14 +6,14 @@ spring:
   application:
     name: catalogo-jogos
   profiles:
-    active: dev
+    active: production
   output:
     ansi:
       enabled: ALWAYS
   datasource:
-    url: ${DATABASE_URL:jdbc:mysql://localhost:3306/catalogo_jogos}
-    username: ${DATABASE_USERNAME:root}
-    password: ${DATABASE_PASSWORD:root}
+    url: ${DB_URL:jdbc:mysql://localhost:3306/catalogo_jogos}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
   jpa:
     hibernate:
       ddl-auto: update
