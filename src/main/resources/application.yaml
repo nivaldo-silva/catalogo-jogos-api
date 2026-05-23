@@ -1,6 +1,10 @@
+
 spring:
   application:
     name: catalogo-jogos
+  output:
+    ansi:
+      enabled: ALWAYS
   datasource:
     url: jdbc:mysql://localhost:3306/catalogo_jogos
     username: root
@@ -8,3 +12,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+logging:
+  pattern:
+    console: '%clr(%d{dd-MM-yyyy HH:mm:ss}){faint} %clr(%5p) %clr([%t]){faint} %clr(%-40.40logger){cyan} %clr(:){yellow} %m%n'
+  file:
+    name: logs/app.log
+  level:
+    root: INFO
+    io.github.nivaldosilva: DEBUG
+    org.springframework.web: DEBUG
